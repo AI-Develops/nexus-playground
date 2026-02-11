@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Playground - Interactive API Explorer</title>
+    <meta name="description" content="Interactive playground for exploring the MTEX Nexus API endpoints">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <header class="hero">
+            <div class="hero-content">
+                <svg class="logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <h1 class="title">Nexus Playground</h1>
+                <p class="subtitle">Interactive API Explorer for MTEX Nexus</p>
+                <div class="status-badge" id="statusBadge">
+                    <div class="pulse"></div>
+                    <span>Checking Status...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="endpoints-grid">
+                <!-- Status Endpoint -->
+                <div class="endpoint-card" data-endpoint="status">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3>System Status</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/status</p>
+                    <p class="description">System status & metrics</p>
+                    <button class="try-btn" onclick="tryEndpoint('status')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+
+                <!-- User Endpoint -->
+                <div class="endpoint-card" data-endpoint="user">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <h3>User Data</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/user</p>
+                    <p class="description">User test data</p>
+                    <button class="try-btn" onclick="tryEndpoint('user')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+
+                <!-- Mock Endpoint -->
+                <div class="endpoint-card" data-endpoint="mock">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                        </svg>
+                        <h3>Mock Data</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/mock</p>
+                    <p class="description">Developer test data</p>
+                    <button class="try-btn" onclick="tryEndpoint('mock')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+
+                <!-- Lorem Endpoint -->
+                <div class="endpoint-card" data-endpoint="lorem">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <h3>Lorem Posts</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/lorem</p>
+                    <p class="description">Lorem test posts with search</p>
+                    <div class="input-group">
+                        <input type="text" id="loremSearch" placeholder="Search keyword...">
+                    </div>
+                    <button class="try-btn" onclick="tryLoremEndpoint()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+
+                <!-- UUID Endpoint -->
+                <div class="endpoint-card" data-endpoint="uuid">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+                        </svg>
+                        <h3>UUID Generator</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/utility/uuid</p>
+                    <p class="description">Generate UUIDs</p>
+                    <div class="input-group">
+                        <input type="number" id="uuidCount" placeholder="Count (1-100)" min="1" max="100" value="5">
+                    </div>
+                    <button class="try-btn" onclick="tryUuidEndpoint()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+
+                <!-- HTTP Status Endpoint -->
+                <div class="endpoint-card" data-endpoint="http">
+                    <div class="card-header">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3>HTTP Status</h3>
+                        <span class="method">GET</span>
+                    </div>
+                    <p class="endpoint-path">/http_status</p>
+                    <p class="description">HTTP status code references</p>
+                    <div class="input-group">
+                        <input type="number" id="statusCode" placeholder="Status code (200, 404...)" min="100" max="599">
+                    </div>
+                    <button class="try-btn" onclick="tryHttpStatusEndpoint()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Try it
+                    </button>
+                </div>
+            </section>
+
+            <section class="response-section" id="responseSection" style="display: none;">
+                <div class="response-header">
+                    <h2>Response</h2>
+                    <button class="close-btn" onclick="closeResponse()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="response-meta">
+                    <span class="response-time" id="responseTime"></span>
+                    <span class="response-url" id="responseUrl"></span>
+                </div>
+                <div class="response-content">
+                    <pre id="responseData"></pre>
+                </div>
+                <div class="chart-container" id="chartContainer" style="display: none;">
+                    <canvas id="dataChart"></canvas>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                </svg>
+                Built for <a href="https://github.com/MTEXdotDev/nx.mtex.dev" target="_blank">MTEX Nexus</a>
+            </p>
+            <p class="footer-meta">API Gateway v1.3.1</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_BASE = 'https://nx.mtex.dev';
+        let currentChart = null;
+
+        // Check API status on load
+        async function checkStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/status`);
+                const data = await response.json();
+                const badge = document.getElementById('statusBadge');
+                
+                if (data.status === 'success') {
+                    badge.innerHTML = `
+                        <div class="pulse active"></div>
+                        <span>API Online • v${data.meta.version}</span>
+                    `;
+                    badge.classList.add('online');
+                }
+            } catch (error) {
+                const badge = document.getElementById('statusBadge');
+                badge.innerHTML = `
+                    <div class="pulse error"></div>
+                    <span>API Offline</span>
+                `;
+                badge.classList.add('offline');
+            }
+        }
+
+        async function tryEndpoint(endpoint) {
+            const startTime = Date.now();
+            const url = `${API_BASE}/${endpoint}`;
+            
+            showResponse();
+            document.getElementById('responseData').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const endTime = Date.now();
+                
+                displayResponse(data, url, endTime - startTime);
+                
+                // Visualize data if applicable
+                if (endpoint === 'mock') {
+                    visualizeData(data);
+                }
+            } catch (error) {
+                displayError(error, url);
+            }
+        }
+
+        async function tryLoremEndpoint() {
+            const searchTerm = document.getElementById('loremSearch').value;
+            const startTime = Date.now();
+            let url = `${API_BASE}/lorem`;
+            
+            if (searchTerm) {
+                url += `?q=${encodeURIComponent(searchTerm)}`;
+            }
+            
+            showResponse();
+            document.getElementById('responseData').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const endTime = Date.now();
+                
+                displayResponse(data, url, endTime - startTime);
+            } catch (error) {
+                displayError(error, url);
+            }
+        }
+
+        async function tryUuidEndpoint() {
+            const count = document.getElementById('uuidCount').value || 5;
+            const startTime = Date.now();
+            const url = `${API_BASE}/utility/uuid/${count}`;
+            
+            showResponse();
+            document.getElementById('responseData').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const endTime = Date.now();
+                
+                displayResponse(data, url, endTime - startTime);
+            } catch (error) {
+                displayError(error, url);
+            }
+        }
+
+        async function tryHttpStatusEndpoint() {
+            const code = document.getElementById('statusCode').value;
+            const startTime = Date.now();
+            let url = `${API_BASE}/http_status`;
+            
+            if (code) {
+                url += `/${code}`;
+            }
+            
+            showResponse();
+            document.getElementById('responseData').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const endTime = Date.now();
+                
+                displayResponse(data, url, endTime - startTime);
+            } catch (error) {
+                displayError(error, url);
+            }
+        }
+
+        function showResponse() {
+            const section = document.getElementById('responseSection');
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Hide chart by default
+            document.getElementById('chartContainer').style.display = 'none';
+            if (currentChart) {
+                currentChart.destroy();
+                currentChart = null;
+            }
+        }
+
+        function closeResponse() {
+            document.getElementById('responseSection').style.display = 'none';
+        }
+
+        function displayResponse(data, url, time) {
+            document.getElementById('responseData').textContent = JSON.stringify(data, null, 2);
+            document.getElementById('responseTime').textContent = `${time}ms`;
+            document.getElementById('responseUrl').textContent = url;
+        }
+
+        function displayError(error, url) {
+            document.getElementById('responseData').textContent = `Error: ${error.message}`;
+            document.getElementById('responseTime').textContent = 'Failed';
+            document.getElementById('responseUrl').textContent = url;
+        }
+
+        function visualizeData(data) {
+            // If data has array items, create a simple chart
+            if (data.data && Array.isArray(data.data)) {
+                const chartContainer = document.getElementById('chartContainer');
+                chartContainer.style.display = 'block';
+                
+                const ctx = document.getElementById('dataChart').getContext('2d');
+                
+                // Destroy previous chart if exists
+                if (currentChart) {
+                    currentChart.destroy();
+                }
+                
+                // Create sample visualization
+                const labels = data.data.slice(0, 10).map((_, i) => `Item ${i + 1}`);
+                const values = data.data.slice(0, 10).map(() => Math.floor(Math.random() * 100));
+                
+                currentChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Sample Data Visualization',
+                            data: values,
+                            backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                            borderColor: 'rgba(139, 92, 246, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(255, 255, 255, 0.1)'
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.7)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: 'rgba(255, 255, 255, 0.7)'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Create animated stars background
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                star.style.animationDuration = `${2 + Math.random() * 3}s`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            checkStatus();
+            createStars();
+        });
+    </script>
+</body>
+</html>
